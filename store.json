@@ -1,1 +1,1 @@
-[{"id":1,"task":"initializations works perfect","createdAt":1760553145401,"updateAt":1760553145401},{"id":2,"task":"list and adding works fine","createdAt":1760553210395,"updateAt":1760553210395}]
+[{"id":1,"task":"test task","status":"in-progress","createdAt":1760594010509,"updateAt":1760594010509},{"id":2,"task":"with updated date","status":"todo","createdAt":1760594023254,"updateAt":1760594053214}]

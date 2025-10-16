@@ -5,6 +5,7 @@
 const process = require("node:process");
 const fs = require("node:fs");
 const { Store } = require("./store.js");
+const { stopCoverage } = require("node:v8");
 
 let store;
 
@@ -28,18 +29,69 @@ function main() {
       add(task);
       break;
     case "list":
-      list();
+      const type = process.argv[3];
+      list(type);
       break;
-
+    case "update":
+      const id = process.argv[3];
+      const newTask = process.argv[4];
+      update(id, newTask);
+      break;
+    case "delete":
+      const todeleteId = process.argv[3];
+      deleteTask(todeleteId);
+      break;
+    case "mark-in-progress":
+      const progressId = process.argv[3];
+      markInProgress(progressId);
+      break;
+    case "mark-done":
+      const doneId = process.argv[3];
+      markDone(doneId);
+      break;
     default:
       console.log(`Options doesn't exists`);
   }
 }
 
-function list() {
+function markInProgress(id) {
+  store = new Store();
+  // map and mark in-progress
+  store.update();
+  store.inProgress(id);
+}
+
+function markDone(id) {
   store = new Store();
   store.update();
-  console.log(store.tasks);
+  store.doneMark(id);
+}
+
+function deleteTask(id) {
+  store = new Store();
+  store.update();
+  store.taskDelete(id);
+}
+function update(id, newTask) {
+  // initail the store
+  store = new Store();
+
+  store.update();
+  store.taskUpdate(id, newTask);
+}
+
+function list(type) {
+  store = new Store();
+  store.update();
+  if (!type || type === "all") {
+    console.log(store.tasks);
+  } else if (type === "done") {
+    console.log(store.done);
+  } else if (type === "in-progress") {
+    console.log(store.listInProgress);
+  } else if (type === "todo") {
+    console.log(store.todo);
+  }
 }
 
 function add(task, description) {
@@ -51,6 +103,7 @@ function add(task, description) {
     const taskObj = {
       id: id,
       task: task,
+      status: "todo",
       description: description,
       createdAt: Date.now(),
       updateAt: Date.now(),
@@ -62,7 +115,7 @@ function add(task, description) {
 }
 
 function initialStore() {
-  // it returns the file descriptor
+  // it returns the file descriptorsteps
   const is = fs.existsSync("store.json");
   if (!is) {
     fs.writeFileSync("store.json", "[]");
