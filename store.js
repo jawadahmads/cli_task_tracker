@@ -36,7 +36,6 @@ class Store {
 
   set addTask(task) {
     this.taskStore.push(task);
-    console.log("Task Added successfully");
   }
 
   update() {
@@ -64,7 +63,6 @@ class Store {
       this.taskStore.find((task) => Number(task.id) === Number(id)) ===
       undefined
     ) {
-      console.log("id does't exists");
       return;
     }
 
@@ -75,7 +73,6 @@ class Store {
         return true;
       }
     });
-    console.log("Task is deleted");
     this.update();
   }
 
@@ -91,7 +88,6 @@ class Store {
       }
     });
     this.update();
-    console.log("Marked in-progress");
   }
 
   doneMark(id) {
@@ -106,7 +102,6 @@ class Store {
       }
     });
     this.update();
-    console.log("Marked Done");
   }
 }
 
