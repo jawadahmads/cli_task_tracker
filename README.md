@@ -132,9 +132,7 @@ node app.js delete 2
 
 ## URL
 
-```link
 https://roadmap.sh/projects/task-tracker
-```
 
 ## Notes
 
